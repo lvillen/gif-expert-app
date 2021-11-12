@@ -1,32 +1,17 @@
-import { useState, useEffect } from 'react';
+import React from 'react';
+import { useFetchGifs } from '../hooks/useFetchGifs';
 import { GifGridItem } from './GifGridItem';
+import 'animate.css';
 
 export const GifGrid = ({ categoryProp }) => {
-  const [images, setImages] = useState([]);
-
-  useEffect( () => {
-    getGifs();
-  }, []);
-
-  const getGifs = async() => {
-    const url = 'https://api.giphy.com/v1/gifs/search?q=Lord+of+the+Rings&limit=10&api_key=wOYIa1qIXGN2erRRDRcJ8KWrqPA6XiyI';
-    const response = await fetch(url);
-    const { data } = await response.json();
-
-    const gifs = data.map( img => {
-      return {
-        id: img.id,
-        title: img.title,
-        url: img.images?.downsized_medium.url
-      };
-    });
-
-    setImages( gifs );
-  }
+  const { data:images, loading } = useFetchGifs( categoryProp );
 
   return (
     <>
       <h3>{ categoryProp }</h3>
+
+      { loading && <p className="animate__animated animate__flash">Loading</p> }
+
       <div className="card-grid">
         {
           images.map( img => (
@@ -37,6 +22,7 @@ export const GifGrid = ({ categoryProp }) => {
           ))
         }
       </div>
+
     </>
   );
 };
