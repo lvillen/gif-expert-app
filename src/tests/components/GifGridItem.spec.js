@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { GifGridItem } from '../../components/GifGridItem';
 
-describe('Testing GifGridItem Component', () => {
+describe('Tests GifGridItem Component', () => {
   const title = 'A title';
   const url = 'https://localhost/image.jpg';
   const wrapper = shallow( <GifGridItem title={ title } url={ url }/> );
